@@ -1,5 +1,5 @@
 #header-container {
-  background-color: rgba(0, 0, 0, 0.674);
+  background-color: #09233c;
   color: white;
   padding: 20px;
   font-size: 30px;
@@ -7,8 +7,15 @@
 }
 
 .columns {
-  margin: 15px;
+  margin: 25px 15px 15px 15px;
 }
 .buttons {
   margin-top: 10px;
+}
+.box {
+  margin-top: -10px;
+}
+.weather {
+  background-color: #114678;
+  color: white;
 }
