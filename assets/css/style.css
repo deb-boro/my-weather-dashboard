@@ -1,0 +1,14 @@
+#header-container {
+  background-color: rgba(0, 0, 0, 0.674);
+  color: white;
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.columns {
+  margin: 15px;
+}
+.buttons {
+  margin-top: 10px;
+}
