@@ -18,4 +18,33 @@
 .weather {
   background-color: #114678;
   color: white;
+  font-size: small;
+  padding: 4px;
+}
+.header-info {
+  font-size: larger;
+  font-weight: bolder;
+}
+.today-weather {
+  line-height: 2;
+}
+.date-forcast {
+  font-weight: bold;
+  font-size: small;
+  justify-content: left;
+}
+.weather-forcast-container {
+  padding-left: 2px;
+  padding-right: 2px;
+  line-height: 2;
+}
+
+img {
+  width: 50%;
+  height: 50%;
+}
+
+.forecast-header {
+  padding: 10px;
+  font-weight: bolder;
 }
