@@ -16,12 +16,43 @@ var displayTodayDate = function (timeStamp, cityName) {
   var todayWeatherCityDate = document.querySelector('.header-info')
   todayWeatherCityDate.textContent = cityName + ' ' + '( ' + dateVal + ' )'
 }
-//get UV Index
 
-var getUVIndex = function (data, cityName) {
+//display uv index
+var displayUVIndex = function (uvi) {
+  var uvIndexEl = document.querySelector('.display-uv-index')
+  uvIndexEl.textContent = 'UV Index : '
+  var uvValue = document.createElement('span')
+  uvIndexEl.appendChild(uvValue)
+  uvValue.textContent = uvi
+  if (uvi <= 2) {
+    uvValue.className = 'low'
+  } else if (uvi > 2 && uvi <= 5) {
+    uvValue.className = 'medium'
+  } else if (uvi > 5 && uvi <= 7) {
+    uvValue.className = 'high'
+  } else if (uvi > 7 && uvi <= 10) {
+    uvValue.className = 'very-high'
+  } else if (uvi > 10) {
+    uvValue.className = 'extreme'
+  }
+}
+
+//get UV Index
+var getUVIndex = function (url) {
+  fetch(url).then(function (response) {
+    response.json().then(function (data) {
+      var timeStamp = data.daily[1].dt
+      // const dateVal = new Date(timeStamp * 1000).toLocaleDateString('en-US')
+      // console.log('date is : ' + dateVal)
+      displayUVIndex(data.daily[1].uvi)
+    })
+  })
+}
+
+//set UV Index
+var setUVIndex = function (data, cityName) {
   var lat = data.coord.lat
   var lon = data.coord.lon
-
   var apiUrlUVIndex =
     'https://api.openweathermap.org/data/2.5/onecall?lat=' +
     lat +
@@ -29,12 +60,10 @@ var getUVIndex = function (data, cityName) {
     lon +
     '&appid=' +
     apiKey
-  fetch(apiUrlUVIndex).then(function (response) {
-    response.json().then(function (data) {
-      return data.current.uvi
-    })
-  })
+  console.log(apiUrlUVIndex)
+  getUVIndex(apiUrlUVIndex)
 }
+
 //Display Today's Weather Info
 var displayTodayWeatherInfo = function (temperature, humidity, windspeed) {
   var todayWeatherCityDate = document.querySelector('.header-info')
@@ -60,8 +89,7 @@ var displayCurrentWeather = function (data, cityName) {
   var weatherIconZero = document.querySelector('.weather-icon-zero')
   weatherIconZero.setAttribute('src', iconUrlZero)
   displayTodayWeatherInfo(temperature, humidity, windspeed)
-  var uviIndex = getUVIndex(data, cityName)
-  console.log('uvi index: ' + uviIndex)
+  setUVIndex(data, cityName)
 }
 
 var displayWeatherForcast = function (data, cityName) {
@@ -175,13 +203,11 @@ var getCityWeatherData = function (cityName) {
 
   fetch(apiUrlCurrent).then(function (response) {
     response.json().then(function (data) {
-      console.log(data)
       displayCurrentWeather(data, cityName)
     })
   })
   fetch(apiUrlForcast).then(function (response) {
     response.json().then(function (data) {
-      console.log(data)
       displayWeatherForcast(data, cityName)
     })
   })

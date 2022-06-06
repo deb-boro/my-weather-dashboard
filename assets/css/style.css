@@ -59,3 +59,29 @@ img {
 .btn-city {
   background-color: grey !important;
 }
+
+span {
+  color: white;
+  padding: 5px;
+  font-weight: bolder;
+}
+
+.low {
+  background-color: green; //1-2
+}
+
+.moderate {
+  background-color: yellow; //3-5
+}
+
+.high {
+  background-color: orange; //6-7
+}
+
+.very-high {
+  background-color: red; //8-10
+}
+
+.extreme {
+  background-color: purple; //11+
+}
