@@ -12,9 +12,11 @@ var btnSearchAddCity = document.querySelector('.btn-add-city')
 
 //Display today's date
 var displayTodayDate = function (timeStamp, cityName) {
+  var upperCaseCityName = cityName.toUpperCase()
   const dateVal = new Date(timeStamp * 1000).toLocaleDateString('en-US')
   var todayWeatherCityDate = document.querySelector('.header-info')
-  todayWeatherCityDate.textContent = cityName + ' ' + '( ' + dateVal + ' )'
+  todayWeatherCityDate.textContent =
+    upperCaseCityName + ' ' + '( ' + dateVal + ' )'
 }
 
 //display uv index
