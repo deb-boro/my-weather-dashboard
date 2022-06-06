@@ -52,50 +52,98 @@ var displayCurrentWeather = function (data, cityName) {
 }
 
 var displayWeatherForcast = function (data, cityName) {
-  var dateOne = new Date(data.list[8].dt * 1000).toLocaleDateString()
-  var dateTwo = new Date(data.list[16].dt * 1000).toLocaleDateString()
-  var dateThree = new Date(data.list[24].dt * 1000).toLocaleDateString()
-  var dateFour = new Date(data.list[32].dt * 1000).toLocaleDateString()
-  var dateFive = new Date(data.list[39].dt * 1000).toLocaleDateString()
+  var dateOne = new Date(data.list[5].dt * 1000).toLocaleDateString()
+  var dateTwo = new Date(data.list[13].dt * 1000).toLocaleDateString()
+  var dateThree = new Date(data.list[21].dt * 1000).toLocaleDateString()
+  var dateFour = new Date(data.list[29].dt * 1000).toLocaleDateString()
+  var dateFive = new Date(data.list[37].dt * 1000).toLocaleDateString()
 
   //icon
 
   iconUrlOne =
     'http://openweathermap.org/img/wn/' +
-    data.list[8].weather[0].icon +
+    data.list[5].weather[0].icon +
     '@2x.png'
   iconUrlTwo =
     'http://openweathermap.org/img/wn/' +
-    data.list[16].weather[0].icon +
+    data.list[13].weather[0].icon +
     '@2x.png'
   iconUrlThree =
     'http://openweathermap.org/img/wn/' +
-    data.list[24].weather[0].icon +
+    data.list[21].weather[0].icon +
     '@2x.png'
   iconUrlFour =
     'http://openweathermap.org/img/wn/' +
-    data.list[32].weather[0].icon +
+    data.list[29].weather[0].icon +
     '@2x.png'
   iconUrlFive =
     'http://openweathermap.org/img/wn/' +
-    data.list[39].weather[0].icon +
+    data.list[37].weather[0].icon +
     '@2x.png'
 
   var weatherIconOne = document.querySelector('.weather-icon-one')
-
+  var weatherIconTwo = document.querySelector('.weather-icon-two')
+  var weatherIconThree = document.querySelector('.weather-icon-three')
+  var weatherIconFour = document.querySelector('.weather-icon-four')
+  var weatherIconFive = document.querySelector('.weather-icon-five')
   weatherIconOne.setAttribute('src', iconUrlOne)
+  weatherIconTwo.setAttribute('src', iconUrlTwo)
+  weatherIconThree.setAttribute('src', iconUrlThree)
+  weatherIconFour.setAttribute('src', iconUrlFour)
+  weatherIconFive.setAttribute('src', iconUrlFive)
 
+  //date
   var dateOneFieldEl = document.querySelector('.header-date-one')
-  var weatherConditionOne = document.querySelector('.weather-condition-one')
+  var dateTwoFieldEl = document.querySelector('.header-date-two')
+  var dateThreeFieldEl = document.querySelector('.header-date-three')
+  var dateFourFieldEl = document.querySelector('.header-date-four')
+  var dateFiveFieldEl = document.querySelector('.header-date-five')
+  //temp
   var tempInfoOne = document.querySelector('.temp-info-one')
+  var tempInfoTwo = document.querySelector('.temp-info-two')
+  var tempInfoThree = document.querySelector('.temp-info-three')
+  var tempInfoFour = document.querySelector('.temp-info-four')
+  var tempInfoFive = document.querySelector('.temp-info-five')
+  //wind
   var windInfoOne = document.querySelector('.wind-info-one')
+  var windInfoTwo = document.querySelector('.wind-info-two')
+  var windInfoThree = document.querySelector('.wind-info-three')
+  var windInfoFour = document.querySelector('.wind-info-four')
+  var windInfoFive = document.querySelector('.wind-info-five ')
+  //humidity
   var humidityInfoOne = document.querySelector('.humidity-info-one')
-  console.log(data)
-  dateOneFieldEl.textContent = dateOne
+  var humidityInfoTwo = document.querySelector('.humidity-info-two')
+  var humidityInfoThree = document.querySelector('.humidity-info-three')
+  var humidityInfoFour = document.querySelector('.humidity-info-four')
+  var humidityInfoFive = document.querySelector('.humidity-info-five')
 
-  tempInfoOne.textContent = 'Temp : ' + data.list[8].main.temp + '°F'
-  windInfoOne.textContent = 'Wind : ' + data.list[8].wind.speed + ' MPH'
-  humidityInfoOne.textContent = 'Humidity : ' + data.list[8].main.humidity + '%'
+  dateOneFieldEl.textContent = dateOne
+  dateTwoFieldEl.textContent = dateTwo
+  dateThreeFieldEl.textContent = dateThree
+  dateFourFieldEl.textContent = dateFour
+  dateFiveFieldEl.textContent = dateFive
+
+  tempInfoOne.textContent = 'Temp : ' + data.list[5].main.temp + '°F'
+  tempInfoTwo.textContent = 'Temp : ' + data.list[13].main.temp + '°F'
+  tempInfoThree.textContent = 'Temp : ' + data.list[21].main.temp + '°F'
+  tempInfoFour.textContent = 'Temp : ' + data.list[29].main.temp + '°F'
+  tempInfoFive.textContent = 'Temp : ' + data.list[36].main.temp + '°F'
+
+  windInfoOne.textContent = 'Wind : ' + data.list[5].wind.speed + ' MPH'
+  windInfoTwo.textContent = 'Wind : ' + data.list[13].wind.speed + ' MPH'
+  windInfoThree.textContent = 'Wind : ' + data.list[21].wind.speed + ' MPH'
+  windInfoFour.textContent = 'Wind : ' + data.list[29].wind.speed + ' MPH'
+  windInfoFive.textContent = 'Wind : ' + data.list[36].wind.speed + ' MPH'
+
+  humidityInfoOne.textContent = 'Humidity : ' + data.list[5].main.humidity + '%'
+  humidityInfoTwo.textContent =
+    'Humidity : ' + data.list[13].main.humidity + '%'
+  humidityInfoThree.textContent =
+    'Humidity : ' + data.list[21].main.humidity + '%'
+  humidityInfoFour.textContent =
+    'Humidity : ' + data.list[29].main.humidity + '%'
+  humidityInfoFive.textContent =
+    'Humidity : ' + data.list[36].main.humidity + '%'
 }
 
 var getCityWeatherData = function (cityName) {
@@ -120,8 +168,8 @@ var getCityWeatherData = function (cityName) {
   })
   fetch(apiUrlForcast).then(function (response) {
     response.json().then(function (data) {
+      console.log(data)
       displayWeatherForcast(data, cityName)
-      console.log('api two fetch')
     })
   })
 }
