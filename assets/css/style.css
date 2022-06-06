@@ -43,8 +43,19 @@ img {
   width: 50%;
   height: 50%;
 }
+.weather-icon-container {
+  height: 20%;
+  width: 20%;
+}
+/* .weather-icon-zero {
+  width: 20px;
+  height: 20px;
+} */
 
 .forecast-header {
   padding: 10px;
   font-weight: bolder;
+}
+.btn-city {
+  background-color: grey !important;
 }

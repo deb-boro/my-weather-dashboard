@@ -14,17 +14,8 @@ var btnSearchAddCity = document.querySelector('.btn-add-city')
 var displayTodayDate = function (timeStamp, cityName) {
   const dateVal = new Date(timeStamp * 1000).toLocaleDateString('en-US')
   var todayWeatherCityDate = document.querySelector('.header-info')
-
-  if (todayWeatherCityDate == null || todayWeatherCityDate == undefined) {
-    var dateFieldEl = document.createElement('h2')
-    dateFieldEl.classList = 'city-date header-info'
-    dateFieldEl.textContent = cityName + ' ' + '( ' + dateVal + ' )'
-    todayWeatherInfo.appendChild(dateFieldEl)
-  } else {
-    todayWeatherCityDate.textContent = cityName + ' ' + '( ' + dateVal + ' )'
-  }
+  todayWeatherCityDate.textContent = cityName + ' ' + '( ' + dateVal + ' )'
 }
-
 //get UV Index
 var getUVIndex = function (cityName) {
   var apiUrl =
@@ -36,35 +27,12 @@ var getUVIndex = function (cityName) {
 //Display Today's Weather Info
 var displayTodayWeatherInfo = function (temperature, humidity, windspeed) {
   var todayWeatherCityDate = document.querySelector('.header-info')
-  var existingTempEl = document.querySelector('.temp-info')
-  var existingHumidityEl = document.querySelector('.humidity-info')
-  var existingWindspeedEl = document.querySelector('.windspeed-info')
-
-  if (existingTempEl == null || existingTempEl == undefined) {
-    var tempEl = document.createElement('p')
-    tempEl.classList = 'temp-info'
-    tempEl.textContent = 'Temperature: ' + temperature + '°F'
-    todayWeatherInfo.appendChild(tempEl)
-  } else {
-    existingTempEl.textContent = 'Temperature: ' + temperature + '°F'
-  }
-  if (existingHumidityEl == null || existingHumidityEl == undefined) {
-    var humidityEl = document.createElement('p')
-    humidityEl.classList = 'humidity-info'
-    humidityEl.textContent = 'Humidity :' + humidity + ' %'
-    todayWeatherInfo.appendChild(humidityEl)
-  } else {
-    existingHumidityEl.textContent = 'Humidity :' + humidity + ' %'
-  }
-
-  if (existingWindspeedEl == null || existingWindspeedEl == undefined) {
-    var windSpeedEl = document.createElement('p')
-    windSpeedEl.classList = 'windspeed-info'
-    windSpeedEl.textContent = 'Windspeed :' + windspeed + ' MPH'
-    todayWeatherInfo.appendChild(windSpeedEl)
-  } else {
-    existingWindspeedEl.textContent = 'Windspeed :' + windspeed + ' MPH'
-  }
+  var tempEl = document.querySelector('.temp-info')
+  var humidityEl = document.querySelector('.humidity-info')
+  var windSpeedEl = document.querySelector('.windspeed-info')
+  tempEl.textContent = 'Temperature: ' + temperature + '°F'
+  humidityEl.textContent = 'Humidity :' + humidity + ' %'
+  windSpeedEl.textContent = 'Windspeed :' + windspeed + ' MPH'
 }
 
 var displayCurrentWeather = function (data, cityName) {
@@ -72,10 +40,14 @@ var displayCurrentWeather = function (data, cityName) {
   var temperature = data.main.temp
   var humidity = data.main.humidity
   var windspeed = data.wind.speed
+  var icon = data.weather[0].icon
 
   //var uvIndex =???
 
   displayTodayDate(timeStamp, cityName)
+  var iconUrlZero = 'http://openweathermap.org/img/wn/' + icon + '@2x.png'
+  var weatherIconZero = document.querySelector('.weather-icon-zero')
+  weatherIconZero.setAttribute('src', iconUrlZero)
   displayTodayWeatherInfo(temperature, humidity, windspeed)
 }
 
@@ -110,6 +82,7 @@ var displayWeatherForcast = function (data, cityName) {
     '@2x.png'
 
   var weatherIconOne = document.querySelector('.weather-icon-one')
+
   weatherIconOne.setAttribute('src', iconUrlOne)
 
   var dateOneFieldEl = document.querySelector('.header-date-one')
@@ -141,8 +114,8 @@ var getCityWeatherData = function (cityName) {
 
   fetch(apiUrlCurrent).then(function (response) {
     response.json().then(function (data) {
+      console.log(data)
       displayCurrentWeather(data, cityName)
-      console.log('api one fetch')
     })
   })
   fetch(apiUrlForcast).then(function (response) {
