@@ -8,6 +8,7 @@ var displayForcastDayTwo = document.querySelector('.display-forcast-day-two')
 var displayForcastDayThree = document.querySelector('display-forcast-day-three')
 var displayForcastDayFour = document.querySelector('.display-forcast-day-four')
 var displayForcastDayFive = document.querySelector('.display-forcast-day-five')
+var btnSearchAddCity = document.querySelector('.btn-add-city')
 
 //Display today's date
 var displayTodayDate = function (timeStamp, cityName) {
@@ -118,14 +119,13 @@ var displayWeatherForcast = function (data, cityName) {
   var humidityInfoOne = document.querySelector('.humidity-info-one')
   console.log(data)
   dateOneFieldEl.textContent = dateOne
-  //weatherConditionOne.textContent=
+
   tempInfoOne.textContent = 'Temp : ' + data.list[8].main.temp + '°F'
   windInfoOne.textContent = 'Wind : ' + data.list[8].wind.speed + ' MPH'
   humidityInfoOne.textContent = 'Humidity : ' + data.list[8].main.humidity + '%'
 }
 
 var getCityWeatherData = function (cityName) {
-  console.log('getCityWeather : ' + cityName)
   var apiUrlCurrent =
     'https://api.openweathermap.org/data/2.5/weather?q=' +
     cityName +
@@ -142,35 +142,81 @@ var getCityWeatherData = function (cityName) {
   fetch(apiUrlCurrent).then(function (response) {
     response.json().then(function (data) {
       displayCurrentWeather(data, cityName)
+      console.log('api one fetch')
     })
   })
   fetch(apiUrlForcast).then(function (response) {
     response.json().then(function (data) {
       displayWeatherForcast(data, cityName)
+      console.log('api two fetch')
     })
   })
 }
+
+var checkArrForCityName = function (existingEntries, cityName) {
+  for (var i = 0; i < existingEntries.length; i++) {
+    var eachArraySize = existingEntries[i].length
+    for (var j = 0; j < eachArraySize; j++) {
+      if (existingEntries[i][j] === cityName) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
 var saveCityName = function (searchCityName) {
   arrCityName.push(searchCityName)
   existingEntries = JSON.parse(localStorage.getItem('city') || '[]')
-  existingEntries.push(arrCityName)
-  localStorage.setItem('city', JSON.stringify(existingEntries))
+  var isCityInArray = checkArrForCityName(existingEntries, searchCityName)
+  if (isCityInArray === false) {
+    var buttonEl = document.createElement('button')
+    buttonEl.classList = 'button is-info is-fullwidth is-hovered btn-city'
+    buttonEl.textContent = searchCityName
+    btnSearchAddCity.prepend(buttonEl) //adding element at the start of the container
+    existingEntries.unshift(arrCityName) // adding array element at the start of the array
+    localStorage.setItem('city', JSON.stringify(existingEntries))
+  } else {
+    arrCityName.pop()
+  }
+
+  // empty the array because in case you don't refresh the page it will create new array with 2 elements
+  arrCityName.splice(0, arrCityName.length)
 }
+
 var loadSaveCityName = function () {
   var loadCityName = JSON.parse(localStorage.getItem('city'))
-
-  console.log(loadCityName)
+  if (loadCityName != null || loadCityName != undefined) {
+    for (var i = 0; i < loadCityName.length; i++) {
+      var buttonEl = document.createElement('button')
+      buttonEl.classList = 'button is-info is-fullwidth is-hovered btn-city'
+      buttonEl.textContent = loadCityName[i][0]
+      btnSearchAddCity.appendChild(buttonEl)
+    }
+  }
 }
 
 var btnSearchHandler = function (event) {
   var targetEl = event.target
   if (targetEl.matches('.btn-search')) {
     var searchInputEl = document.querySelector('.input')
-    var searchCityName = searchInputEl.value
-    saveCityName(searchCityName)
+    var searchCityName = searchInputEl.value.toLowerCase()
+    if (
+      searchCityName === '' ||
+      searchCityName === null ||
+      searchCityName === undefined
+    ) {
+      alert('Please type a city name')
+    } else {
+      saveCityName(searchCityName)
+      getCityWeatherData(searchCityName)
+    }
+  } else if (targetEl.matches('.btn-city')) {
+    searchCityName = targetEl.textContent
     getCityWeatherData(searchCityName)
-    loadSaveCityName()
   }
 }
 
+loadSaveCityName()
+btnSearchAddCity.addEventListener('click', btnSearchHandler)
 btnSearchEl.addEventListener('click', btnSearchHandler)
