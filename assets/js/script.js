@@ -17,12 +17,23 @@ var displayTodayDate = function (timeStamp, cityName) {
   todayWeatherCityDate.textContent = cityName + ' ' + '( ' + dateVal + ' )'
 }
 //get UV Index
-var getUVIndex = function (cityName) {
-  var apiUrl =
-    'http://api.openweathermap.org/geo/1.0/direct?q=' +
-    cityName +
-    '&limit=5&appid=' +
+
+var getUVIndex = function (data, cityName) {
+  var lat = data.coord.lat
+  var lon = data.coord.lon
+
+  var apiUrlUVIndex =
+    'https://api.openweathermap.org/data/2.5/onecall?lat=' +
+    lat +
+    '&lon=' +
+    lon +
+    '&appid=' +
     apiKey
+  fetch(apiUrlUVIndex).then(function (response) {
+    response.json().then(function (data) {
+      return data.current.uvi
+    })
+  })
 }
 //Display Today's Weather Info
 var displayTodayWeatherInfo = function (temperature, humidity, windspeed) {
@@ -49,6 +60,8 @@ var displayCurrentWeather = function (data, cityName) {
   var weatherIconZero = document.querySelector('.weather-icon-zero')
   weatherIconZero.setAttribute('src', iconUrlZero)
   displayTodayWeatherInfo(temperature, humidity, windspeed)
+  var uviIndex = getUVIndex(data, cityName)
+  console.log('uvi index: ' + uviIndex)
 }
 
 var displayWeatherForcast = function (data, cityName) {
@@ -222,6 +235,8 @@ var btnSearchHandler = function (event) {
   if (targetEl.matches('.btn-search')) {
     var searchInputEl = document.querySelector('.input')
     var searchCityName = searchInputEl.value.toLowerCase()
+    searchInputEl.value = '' //clear old text
+
     if (
       searchCityName === '' ||
       searchCityName === null ||
