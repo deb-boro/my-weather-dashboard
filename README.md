@@ -21,4 +21,4 @@ https://deb-boro.github.io/my-weather-dashboard/
 
 ## Screenshot
 
-[Screenshot](https://github.com/deb-boro/my-weather-dashboard/blob/main/assets/images/MyWeatherDashboard.png?raw=true)
+![Screenshot](https://github.com/deb-boro/my-weather-dashboard/blob/main/assets/images/MyWeatherDashboard.png?raw=true)
