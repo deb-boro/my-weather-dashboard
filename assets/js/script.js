@@ -18,8 +18,6 @@ var displayTodayDate = function (timeStamp, cityName) {
   todayWeatherCityDate.textContent =
     upperCaseCityName + ' ' + '( ' + dateVal + ' )'
 }
-
-//display uv index
 var displayUVIndex = function (uvi) {
   var uvIndexEl = document.querySelector('.display-uv-index')
   uvIndexEl.textContent = 'UV Index : '
@@ -38,7 +36,6 @@ var displayUVIndex = function (uvi) {
     uvValue.className = 'extreme'
   }
 }
-
 //get UV Index
 var getUVIndex = function (url) {
   fetch(url).then(function (response) {
@@ -95,33 +92,33 @@ var displayCurrentWeather = function (data, cityName) {
 }
 
 var displayWeatherForcast = function (data, cityName) {
-  var dateOne = new Date(data.list[5].dt * 1000).toLocaleDateString()
-  var dateTwo = new Date(data.list[13].dt * 1000).toLocaleDateString()
-  var dateThree = new Date(data.list[21].dt * 1000).toLocaleDateString()
-  var dateFour = new Date(data.list[29].dt * 1000).toLocaleDateString()
-  var dateFive = new Date(data.list[37].dt * 1000).toLocaleDateString()
+  var dateOne = new Date(data.list[8].dt * 1000).toLocaleDateString()
+  var dateTwo = new Date(data.list[16].dt * 1000).toLocaleDateString()
+  var dateThree = new Date(data.list[24].dt * 1000).toLocaleDateString()
+  var dateFour = new Date(data.list[32].dt * 1000).toLocaleDateString()
+  var dateFive = new Date(data.list[39].dt * 1000).toLocaleDateString()
 
   //icon
 
   iconUrlOne =
     'http://openweathermap.org/img/wn/' +
-    data.list[5].weather[0].icon +
+    data.list[8].weather[0].icon +
     '@2x.png'
   iconUrlTwo =
     'http://openweathermap.org/img/wn/' +
-    data.list[13].weather[0].icon +
+    data.list[16].weather[0].icon +
     '@2x.png'
   iconUrlThree =
     'http://openweathermap.org/img/wn/' +
-    data.list[21].weather[0].icon +
+    data.list[24].weather[0].icon +
     '@2x.png'
   iconUrlFour =
     'http://openweathermap.org/img/wn/' +
-    data.list[29].weather[0].icon +
+    data.list[32].weather[0].icon +
     '@2x.png'
   iconUrlFive =
     'http://openweathermap.org/img/wn/' +
-    data.list[37].weather[0].icon +
+    data.list[39].weather[0].icon +
     '@2x.png'
 
   var weatherIconOne = document.querySelector('.weather-icon-one')
@@ -166,27 +163,27 @@ var displayWeatherForcast = function (data, cityName) {
   dateFourFieldEl.textContent = dateFour
   dateFiveFieldEl.textContent = dateFive
 
-  tempInfoOne.textContent = 'Temp : ' + data.list[5].main.temp + '°F'
-  tempInfoTwo.textContent = 'Temp : ' + data.list[13].main.temp + '°F'
-  tempInfoThree.textContent = 'Temp : ' + data.list[21].main.temp + '°F'
-  tempInfoFour.textContent = 'Temp : ' + data.list[29].main.temp + '°F'
-  tempInfoFive.textContent = 'Temp : ' + data.list[36].main.temp + '°F'
+  tempInfoOne.textContent = 'Temp : ' + data.list[8].main.temp + '°F'
+  tempInfoTwo.textContent = 'Temp : ' + data.list[16].main.temp + '°F'
+  tempInfoThree.textContent = 'Temp : ' + data.list[24].main.temp + '°F'
+  tempInfoFour.textContent = 'Temp : ' + data.list[32].main.temp + '°F'
+  tempInfoFive.textContent = 'Temp : ' + data.list[39].main.temp + '°F'
 
-  windInfoOne.textContent = 'Wind : ' + data.list[5].wind.speed + ' MPH'
-  windInfoTwo.textContent = 'Wind : ' + data.list[13].wind.speed + ' MPH'
-  windInfoThree.textContent = 'Wind : ' + data.list[21].wind.speed + ' MPH'
-  windInfoFour.textContent = 'Wind : ' + data.list[29].wind.speed + ' MPH'
-  windInfoFive.textContent = 'Wind : ' + data.list[36].wind.speed + ' MPH'
+  windInfoOne.textContent = 'Wind : ' + data.list[8].wind.speed + ' MPH'
+  windInfoTwo.textContent = 'Wind : ' + data.list[16].wind.speed + ' MPH'
+  windInfoThree.textContent = 'Wind : ' + data.list[24].wind.speed + ' MPH'
+  windInfoFour.textContent = 'Wind : ' + data.list[32].wind.speed + ' MPH'
+  windInfoFive.textContent = 'Wind : ' + data.list[39].wind.speed + ' MPH'
 
-  humidityInfoOne.textContent = 'Humidity : ' + data.list[5].main.humidity + '%'
+  humidityInfoOne.textContent = 'Humidity : ' + data.list[8].main.humidity + '%'
   humidityInfoTwo.textContent =
-    'Humidity : ' + data.list[13].main.humidity + '%'
+    'Humidity : ' + data.list[16].main.humidity + '%'
   humidityInfoThree.textContent =
-    'Humidity : ' + data.list[21].main.humidity + '%'
+    'Humidity : ' + data.list[24].main.humidity + '%'
   humidityInfoFour.textContent =
-    'Humidity : ' + data.list[29].main.humidity + '%'
+    'Humidity : ' + data.list[32].main.humidity + '%'
   humidityInfoFive.textContent =
-    'Humidity : ' + data.list[36].main.humidity + '%'
+    'Humidity : ' + data.list[39].main.humidity + '%'
 }
 
 var getCityWeatherData = function (cityName) {
